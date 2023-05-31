@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Day of Birth Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      text-align: center;
+    }
+
+    h1 {
+      color: #333333;
+    }
+
+    form {
+      margin-top: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 10px;
+      font-size: 18px;
+    }
+
+    .date-input {
+      display: flex;
+      justify-content: center;
+    }
+
+    .date-input input[type="text"] {
+      padding: 8px;
+      font-size: 16px;
+      border: 1px solid #dddddd;
+      width: 50px;
+      text-align: center;
+    }
+
+    input[type="submit"] {
+      padding: 8px 20px;
+      font-size: 16px;
+      background-color: #4CAF50;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 20px;
+      font-weight: bold;
+    }
+  </style>
+  <script>
+    function getDayOfWeek() {
+      var day = parseInt(document.getElementById('day').value);
+      var month = parseInt(document.getElementById('month').value);
+      var year = parseInt(document.getElementById('year').value);
+
+      var maxDaysInMonth;
+      if (month === 2) {
+        if ((year % 4 === 0 && year % 100 !== 0) || year % 400 === 0) {
+          maxDaysInMonth = 29; // Leap year
+        } else {
+          maxDaysInMonth = 28;
+        }
+      } else if (month === 4 || month === 6 || month === 9 || month === 11) {
+        maxDaysInMonth = 30;
+      } else {
+        maxDaysInMonth = 31;
+      }
+
+      if (day < 1 || day > maxDaysInMonth || month < 1 || month > 12 || year < 1) {
+        alert('Invalid date');
+        return;
+      }
+
+      var date = new Date(year, month - 1, day);
+      var dayOfWeek = date.toLocaleString('en-US', { weekday: 'long' });
+
+      document.getElementById('result').textContent = 'The day is ' + dayOfWeek;
+    }
+  </script>
+</head>
+<body>
+  <h1>Day of the Week</h1>
+
+  <form onsubmit="event.preventDefault(); getDayOfWeek();">
+    <label for="date">Enter the date:</label>
+    <div class="date-input">
+      <input type="text" id="day" placeholder="dd" required>
+      <span>&nbsp;/&nbsp;</span>
+      <input type="text" id="month" placeholder="mm" required>
+      <span>&nbsp;/&nbsp;</span>
+      <input type="text" id="year" placeholder="yyyy" required>
+    </div>
+    <br>
+    <input type="submit" value="Submit">
+  </form>
+
+  <p id="result"></p>
+</body>
+</html>
